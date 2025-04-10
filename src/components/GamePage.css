@@ -1,0 +1,143 @@
+.game-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #7c3aed, #ec4899, #fbbf24);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: "Segoe UI", sans-serif;
+  width: 100vw;
+}
+
+.game-container {
+  max-width: 800px;
+  width: 100%;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2rem;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  color: white;
+  text-align: center;
+  width: 40vw;
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.game-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  text-shadow: 1px 1px 3px #000;
+}
+
+.game-header p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.riddle-text {
+  font-size: 1.5rem;
+  font-style: italic;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+input {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 1rem;
+  border: none;
+  font-size: 1rem;
+  background-color: white;
+  color: black;
+  outline: none;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.button-group button,
+.final-section button,
+.feedback-section button {
+  background: linear-gradient(135deg, #facc15, #34d399);
+  padding: 0.75rem 1.5rem;
+  border-radius: 2rem;
+  font-weight: bold;
+  color: black;
+  border: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.button-group button:hover,
+.final-section button:hover,
+.feedback-section button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #fff;
+}
+
+.hint-text {
+  color: #facc15;
+  font-family: monospace;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.feedback-section h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.feedback-section p {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.timer-section {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer-section button {
+  margin-top: 0.5rem;
+  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  padding: 0.5rem 1.2rem;
+  border-radius: 2rem;
+  font-weight: bold;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.timer-section button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #fff;
+}
