@@ -29,7 +29,7 @@ export const EntryPage: React.FC<EntryPageProps> = ({
       <div className="entry-card">
         <img src="fr.jpg" alt="CICE" className="owner-img" />
 
-        <h1 className="entry-title">Welcome to Tech Charades</h1>
+        <h1 className="entry-title">Welcome to TechCharades</h1>
 
         <input
           type="text"
@@ -54,7 +54,7 @@ export const EntryPage: React.FC<EntryPageProps> = ({
 
         <div className="timer-section">
           <div className="timer-label">⏳ Timer</div>
-          <div className="timer-value">4:00</div>
+          <div className="timer-value">3:00</div>
         </div>
       </div>
     </div>

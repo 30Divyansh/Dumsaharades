@@ -7,11 +7,24 @@ interface GamePageProps {
 }
 
 const riddles = [
-  { phrase: "I guard your secrets, but I’m just dots or stars.", answer: "password" },
-  { phrase: "I live in the clouds, but I’m not weather.", answer: "cloud" },
-  { phrase: "You talk to me, and I do what you say.", answer: "voice assistant" },
-  { phrase: "I open windows but I’m not a house part.", answer: "browser" },
-  { phrase: "I think fast but I’m not human.", answer: "cpu" },
+  { phrase: "I guard your secrets, but I'm just dots or stars.", answer: "password" },
+  { phrase: "I'm a page with no paper and no pen.", answer: "website" },
+  { phrase: "I fly high with no wings, and take pictures too.", answer: "drone" },
+  { phrase: "I'm full of keys but open no locks.", answer: "keyboard" },
+  { phrase: "I carry electricity, not people.", answer: "wire" },
+  { phrase: "I connect you to others, but I'm not a phone.", answer: "internet" },
+  { phrase: "I live in your pocket and know everything.", answer: "smartphone" },
+  { phrase: "I'm smart, but I'm not human.", answer: "ai" },
+  { phrase: "I keep bad guys out of your system.", answer: "antivirus" },
+  { phrase: "I talk in ones and zeros.", answer: "binary" },
+  { phrase: "I'm small, mighty, and control robots.", answer: "microcontroller" },
+  { phrase: "I turn sound into electricity.", answer: "microphone" },
+  { phrase: "I sneak into systems quietly.", answer: "virus" },
+  { phrase: "I feed power to the hungry gadgets.", answer: "charger" },
+  { phrase: "I open secret vaults with a plastic swipe.", answer: "atm" },
+  { phrase: "I spin above your head but never fall down.", answer: "fan" },
+  { phrase: "I shine bright without burning out.", answer: "bulb" },
+  { phrase: "I live in your pocket but know the whole world.", answer: "smartphone" },
 ];
 
 export const GamePage: React.FC<GamePageProps> = ({ teamName, onFinish }) => {
@@ -19,16 +32,13 @@ export const GamePage: React.FC<GamePageProps> = ({ teamName, onFinish }) => {
   const [score, setScore] = useState(0);
   const [riddle, setRiddle] = useState(riddles[Math.floor(Math.random() * riddles.length)]);
   const [playerAnswer, setPlayerAnswer] = useState("");
-  const [finalGuess, setFinalGuess] = useState("");
   const [hintUsed, setHintUsed] = useState(false);
   const [hint, setHint] = useState("");
-  const [stage, setStage] = useState<"question" | "final" | "feedback">("question");
   const [feedback, setFeedback] = useState("");
 
-  // ✅ Timer logic (correct type!)
-  const [timeLeft, setTimeLeft] = useState(240); // 4 minutes
+  const [timeLeft, setTimeLeft] = useState(180); // ✅ 3 minutes = 180 seconds
   const [timerRunning, setTimerRunning] = useState(false);
-  const timerRef = useRef<number | null>(null); // ✅ FIXED type
+  const timerRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (timerRunning && timeLeft > 0) {
@@ -63,25 +73,21 @@ export const GamePage: React.FC<GamePageProps> = ({ teamName, onFinish }) => {
     setHintUsed(true);
   };
 
-  const handleNextStage = () => setStage("final");
-
   const handleSubmit = () => {
-    const correct = finalGuess.trim().toLowerCase() === riddle.answer.toLowerCase();
+    const correct = playerAnswer.trim().toLowerCase() === riddle.answer.toLowerCase();
     const earned = correct ? (hintUsed ? 5 : 10) : 0;
     setScore((prev) => prev + earned);
     setFeedback(correct ? "🎉 Woohoo! You nailed it!" : "💔 Oops! Try harder next time.");
-    setStage("feedback");
   };
 
   const nextRound = () => {
-    if (round < 3) {
+    if (round < 2) { // ✅ stays 2 rounds
       setRound(round + 1);
       setRiddle(riddles[Math.floor(Math.random() * riddles.length)]);
-      setStage("question");
       setHintUsed(false);
       setHint("");
       setPlayerAnswer("");
-      setFinalGuess("");
+      setFeedback("");
     } else {
       onFinish(score);
     }
@@ -92,7 +98,7 @@ export const GamePage: React.FC<GamePageProps> = ({ teamName, onFinish }) => {
       <div className="game-container fade-in">
         <div className="game-header">
           <h1>{`🎮 Team: ${teamName}`}</h1>
-          <p>{`🔁 Round ${round} of 3`}</p>
+          <p>{`🔁 Round ${round} of 2`}</p>
           <div className="timer-section">
             <p>⏱️ Time Left: {formatTime(timeLeft)}</p>
             <button onClick={toggleTimer}>
@@ -101,36 +107,21 @@ export const GamePage: React.FC<GamePageProps> = ({ teamName, onFinish }) => {
           </div>
         </div>
 
-        {stage === "question" && (
-          <div className="question-section">
-            <p className="riddle-text">"{riddle.phrase}"</p>
-            <input
-              value={playerAnswer}
-              onChange={(e) => setPlayerAnswer(e.target.value)}
-              placeholder="Type your answer here..."
-            />
-            <div className="button-group">
-              <button onClick={handleHint}>💡 Get Hint</button>
-              <button onClick={handleNextStage}>✅ Final Guess</button>
-            </div>
-            {hint && <p className="hint-text">{hint}</p>}
+        <div className="question-section">
+          <p className="riddle-text">"{riddle.phrase}"</p>
+          <input
+            value={playerAnswer}
+            onChange={(e) => setPlayerAnswer(e.target.value)}
+            placeholder="Type your answer here..."
+          />
+          <div className="button-group">
+            <button onClick={handleHint}>💡 Get Hint</button>
+            <button onClick={handleSubmit}>✅ Submit Final Guess</button>
           </div>
-        )}
+          {hint && <p className="hint-text">{hint}</p>}
+        </div>
 
-        {stage === "final" && (
-          <div className="final-section">
-            <input
-              value={finalGuess}
-              onChange={(e) => setFinalGuess(e.target.value)}
-              placeholder="Final guess (Player 3)..."
-            />
-            <div className="button-group">
-              <button onClick={handleSubmit}>🚀 Submit Final Answer</button>
-            </div>
-          </div>
-        )}
-
-        {stage === "feedback" && (
+        {feedback && (
           <div className="feedback-section">
             <h2>{feedback}</h2>
             <p>✨ Score: {score}</p>
